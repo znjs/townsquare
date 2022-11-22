@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { BiCurrentLocation } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { LogoMain } from "../assets";
 import { LoginBtn } from "../components";
 import { CITIES, LOGIN_BUTTONS } from "../utils";
 
 export const Login = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  const [loggedIn, setLoggedIn] = useState<boolean>(
+    useSelector((state: any) => state.auth.loggedIn) || false,
+  );
   const [locationDetected, setLocationDetected] = useState<boolean>(false);
 
   function citySelect(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -23,7 +26,7 @@ export const Login = () => {
       <div className="h-full w-full backdrop-blur-[2px] flex justify-center items-center">
         <div className="bg-white rounded-lg p-4 text-center w-[90%]">
           <img src={LogoMain} alt="TownSquare Logo" className="mx-auto" />
-          {loggedIn ? (
+          {!loggedIn ? (
             <>
               <p className="text-3xl my-3">Sign In / Log In</p>
               <p className="text-lg mb-2">
