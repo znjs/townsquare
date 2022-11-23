@@ -12,14 +12,7 @@ export const Login = () => {
     useSelector((state: any) => state.auth.loggedIn) || false,
   );
   const [locationDetected, setLocationDetected] = useState<boolean>(false);
-
-  function citySelect(e: React.ChangeEvent<HTMLSelectElement>) {
-    if (e.target.value === "default") {
-      setLocationDetected(false);
-    } else {
-      setLocationDetected(true);
-    }
-  }
+  const [city, setCity] = useState("default");
 
   return (
     <div className="bg-[url('/src/assets/Darkmap.svg')] h-screen w-screen bg-center bg-cover">
@@ -48,9 +41,12 @@ export const Login = () => {
                   name="City"
                   id="City"
                   className="w-full mb-4 text-lg p-2 bg-slate-200 rounded-lg"
-                  defaultValue={"default"}
+                  value={city}
                   onChange={(e) => {
-                    citySelect(e);
+                    setCity(e.target.value);
+                    if (e.target.value !== "default") {
+                      setLocationDetected(true);
+                    }
                   }}>
                   <option value="default">Not Selected</option>
                   {CITIES.map((city) => (
